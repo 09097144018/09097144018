@@ -1,10 +1,158 @@
-- 👋 Hi, I’m @09097144018
-- 👀 I’m interested in ...
-- 🌱 I’m currently learning ...
-- 💞️ I’m looking to collaborate on ...
-- 📫 How to reach me ...
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #f5f5f5, #dcdcdc);
+        }
 
-<!---
-09097144018/09097144018 is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->
+        h2 {
+            text-align: center;
+            background-color: #4285f4;
+            color: white;
+            padding: 20px;
+        }
+
+        form {
+            width: 80%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="password"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #dcdcdc;
+            border-radius: 4px;
+            background-color: #f0f0f0;
+        }
+
+        input[type="button"] {
+            background: linear-gradient(to bottom, #4db6ac, #32a696);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="button"]:hover {
+            background: linear-gradient(to bottom, #32a696, #2b8f82);
+        }
+
+        .delete-btn {
+            padding: 3px 6px;
+            background-color: #e53935;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .delete-btn:hover {
+            background-color: #c62828;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #f5f5f5;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        hr {
+            margin-top: 20px;
+            border: 1px solid #dcdcdc;
+        }
+
+        @media only screen and (max-width: 600px) {
+            form {
+                width: 90%;
+            }
+        }
+    </style>
+    <title>Attendance System</title>
+    <script>
+        var attendanceList = []; 
+
+        function recordAttendance() {
+            var name = document.getElementById("name").value;
+            var currentDate = new Date();
+
+            var formattedDate = (currentDate.getMonth() + 1) + '/' + currentDate.getDate();
+            var formattedTime = currentDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+            attendanceList.push({
+                name: name,
+                timestamp: formattedDate + " " + formattedTime
+            });
+
+            displayAttendanceList();
+        }
+
+        function deleteEntry(index) {
+            var confirmDelete = confirm("Are you sure you want to delete this entry?");
+            
+            if (confirmDelete) {
+                attendanceList.splice(index, 1);
+                displayAttendanceList();
+            }
+        }
+
+        function displayAttendanceList() {
+            var result = document.getElementById("result");
+            result.innerHTML = "";
+
+            for (var i = 0; i < attendanceList.length; i++) {
+                result.innerHTML +=
+                    (i + 1) + ". " +
+                    attendanceList[i].name +
+                    " - Date and Time: " +
+                    attendanceList[i].timestamp +
+                    " <button class=\"delete-btn\" onclick=\"deleteEntry(" + i + ")\">Delete</button>";
+                
+                if (i < attendanceList.length - 1) {
+                    result.innerHTML += "<br>";
+                    result.innerHTML += "<hr>";
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <h2>Attendance System</h2>
+
+    <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+        <div>
+            <input type="button" value="Check In" onclick="recordAttendance()">
+        </div>
+    </form>
+
+    <div id="result"></div>
+
+</body>
+</html>
